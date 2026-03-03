@@ -116,7 +116,213 @@ text-decoration:none;
 <p>Notes Provided by IGS</p>
 <p>Test Series (Offline + Soft Copy)</p>
 </div>
+<body>
 
+<header>
+<h1>IGS Study Portal</h1>
+<input type="text" id="searchBox" placeholder="Search Subject or Chapter..." onkeyup="searchContent()">
+</header>
+
+<div id="breadcrumb"></div>
+
+<div class="container">
+
+<!-- ===== BOARDS ===== -->
+
+<div class="accordion">
+
+<button class="main-btn">CBSE Board</button>
+<div class="panel">
+  <!-- Classes -->
+  ${generateClasses("CBSE")}
+</div>
+
+<button class="main-btn">ICSE Board</button>
+<div class="panel">
+  ${generateClasses("ICSE")}
+</div>
+
+<button class="main-btn">State Board</button>
+<div class="panel">
+  ${generateClasses("STATE")}
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#141e30,#243b55);
+color:white;
+}
+
+header{
+text-align:center;
+padding:20px;
+background:#000;
+}
+
+header h1{
+margin:10px;
+}
+
+#searchBox{
+padding:10px;
+width:80%;
+max-width:400px;
+border-radius:25px;
+border:none;
+outline:none;
+}
+
+.container{
+padding:20px;
+}
+
+.main-btn{
+width:100%;
+padding:15px;
+border:none;
+background:#ffd700;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+border-radius:10px;
+}
+
+.panel{
+display:none;
+padding:10px;
+background:white;
+color:black;
+border-radius:10px;
+margin-top:5px;
+animation:fade 0.3s ease-in-out;
+}
+
+.panel button{
+width:100%;
+margin-top:5px;
+padding:10px;
+background:#243b55;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.panel a{
+display:block;
+padding:6px;
+text-decoration:none;
+color:#243b55;
+font-weight:bold;
+}
+
+.panel a:hover{
+color:#ffd700;
+}
+
+#breadcrumb{
+padding:10px 20px;
+font-size:14px;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
+}
+
+</style>
+
+<script>
+
+// Toggle Accordion
+document.querySelectorAll(".main-btn").forEach(btn=>{
+btn.addEventListener("click",function(){
+document.querySelectorAll(".panel").forEach(p=>p.style.display="none");
+this.nextElementSibling.style.display="block";
+});
+});
+
+// Search Function
+function searchContent(){
+let input = document.getElementById("searchBox").value.toLowerCase();
+let links = document.querySelectorAll(".panel a");
+links.forEach(link=>{
+if(link.innerText.toLowerCase().includes(input)){
+link.style.display="block";
+}else{
+link.style.display="none";
+}
+});
+}
+
+</script>
+
+<script>
+
+// Dynamic Class Generator
+function generateClasses(board){
+
+let classesHTML = "";
+
+for(let i=5;i<=12;i++){
+classesHTML += `
+<button onclick="toggleClass(this)">Class ${i}</button>
+<div class="panel">
+${generateSubjects(board,i)}
+</div>
+`;
+}
+
+return classesHTML;
+}
+
+// Subjects Generator
+function generateSubjects(board,cls){
+
+let subjects = ["Science","Mathematics","English","History","Geography"];
+
+let subjectHTML="";
+
+subjects.forEach(sub=>{
+subjectHTML += `
+<button onclick="toggleClass(this)">${sub}</button>
+<div class="panel">
+${generateChapters(board,cls,sub)}
+</div>
+`;
+});
+
+return subjectHTML;
+}
+
+// Chapter Generator
+function generateChapters(board,cls,sub){
+
+let chapterHTML="";
+
+for(let c=1;c<=15;c++){
+chapterHTML += `<a href="#">Chapter ${c}</a>`;
+}
+
+return chapterHTML;
+}
+
+// Toggle Inner Sections
+function toggleClass(btn){
+let panel = btn.nextElementSibling;
+panel.style.display = panel.style.display === "block" ? "none" : "block";
+}
+
+</script>
+
+</body>
 <div class="section">
 <h2>Professional Fee Structure (Session 2026–27)</h2>
 
